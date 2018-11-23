@@ -1,4 +1,5 @@
 import pika
+import time
 """
 Simple message receiver
 """
@@ -11,6 +12,8 @@ channel.queue_declare(queue='first_kit')
 
 def cb(ch, method, properties, body):
     print("[x] Received %r" % body)
+    time.sleep(body.count(b'.'))
+    print("[x] Done")
 
 
 channel.basic_consume(cb,
