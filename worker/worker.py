@@ -14,11 +14,10 @@ def cb(ch, method, properties, body):
     print("[x] Received %r" % body)
     time.sleep(body.count(b'.'))
     print("[x] Done")
+    ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
-channel.basic_consume(cb,
-                      queue='first_kit',
-                      no_ack=True)
+channel.basic_consume(cb, queue='first_kit')
 
 print("{*} Waiting for message, to exit press ^C")
 channel.start_consuming()
